@@ -1,0 +1,22 @@
+{
+  "_comment": "Starter offline advisory dataset (OSV-style ranges). It is NOT exhaustive - keep running npm audit / pip-audit / osv-scanner in CI. Extend it with the shieldlocal.customAdvisories setting.",
+  "updated": "2026-11-20",
+  "advisories": [
+    { "eco": "npm", "name": "lodash", "id": "CVE-2021-23337", "severity": "high", "summary": "Command injection via template()", "ranges": [{ "fixed": "4.17.21" }] },
+    { "eco": "npm", "name": "minimist", "id": "CVE-2021-44906", "severity": "critical", "summary": "Prototype pollution", "ranges": [{ "fixed": "1.2.6" }] },
+    { "eco": "npm", "name": "node-fetch", "id": "CVE-2022-0235", "severity": "high", "summary": "Forwards secure headers to untrusted sites on redirect", "ranges": [{ "fixed": "2.6.7" }] },
+    { "eco": "npm", "name": "jsonwebtoken", "id": "CVE-2022-23529", "severity": "high", "summary": "Insecure input validation in verify() may allow RCE", "ranges": [{ "fixed": "9.0.0" }] },
+    { "eco": "npm", "name": "axios", "id": "CVE-2020-28168", "severity": "medium", "summary": "SSRF through redirects", "ranges": [{ "fixed": "0.21.1" }] },
+    { "eco": "npm", "name": "express", "id": "CVE-2022-24999", "severity": "high", "summary": "Prototype pollution via qs", "ranges": [{ "fixed": "4.17.3" }] },
+    { "eco": "npm", "name": "ejs", "id": "CVE-2022-29078", "severity": "critical", "summary": "Server-side template injection leading to RCE", "ranges": [{ "fixed": "3.1.7" }] },
+    { "eco": "npm", "name": "moment", "id": "CVE-2022-31129", "severity": "high", "summary": "ReDoS in date parsing", "ranges": [{ "fixed": "2.29.4" }] },
+    { "eco": "npm", "name": "handlebars", "id": "CVE-2021-23369", "severity": "critical", "summary": "Remote code execution via compile()", "ranges": [{ "fixed": "4.7.7" }] },
+    { "eco": "npm", "name": "serialize-javascript", "id": "CVE-2020-7660", "severity": "high", "summary": "Remote code execution via crafted input", "ranges": [{ "fixed": "3.1.0" }] },
+    { "eco": "pypi", "name": "pyyaml", "id": "CVE-2020-14343", "severity": "critical", "summary": "Arbitrary code execution in full_load", "ranges": [{ "fixed": "5.4" }] },
+    { "eco": "pypi", "name": "requests", "id": "CVE-2023-32681", "severity": "medium", "summary": "Proxy-Authorization header leak on redirect", "ranges": [{ "fixed": "2.31.0" }] },
+    { "eco": "pypi", "name": "flask", "id": "CVE-2023-30861", "severity": "high", "summary": "Session cookie may be cached by proxies", "ranges": [{ "fixed": "2.2.5" }] },
+    { "eco": "pypi", "name": "pillow", "id": "CVE-2023-4863", "severity": "high", "summary": "libwebp heap buffer overflow", "ranges": [{ "fixed": "10.0.1" }] },
+    { "eco": "pypi", "name": "urllib3", "id": "CVE-2021-33503", "severity": "high", "summary": "ReDoS in URL authority parsing", "ranges": [{ "fixed": "1.26.5" }] },
+    { "eco": "pypi", "name": "jinja2", "id": "CVE-2024-22195", "severity": "medium", "summary": "XSS through the xmlattr filter", "ranges": [{ "fixed": "3.1.3" }] }
+  ]
+}
