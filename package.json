@@ -1,0 +1,120 @@
+{
+  "name": "shieldlocal",
+  "displayName": "ShieldLocal — Offline Security Scanner",
+  "description": "Find hard-coded secrets, injection flaws, weak crypto and vulnerable dependencies as you type. 77 rules, quick fixes, dashboard and SARIF export — 100% offline, zero telemetry.",
+  "version": "1.0.0",
+  "publisher": "radwanalmsora",
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "galleryBanner": { "color": "#0B1220", "theme": "dark" },
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Linters", "Other"],
+  "keywords": [
+    "security", "secrets", "sast", "vulnerability", "owasp", "cwe", "sarif",
+    "linter", "offline", "privacy", "xss", "sql injection", "devsecops", "scanner"
+  ],
+  "repository": { "type": "git", "url": "https://github.com/radwanalmsora/shieldlocal.git" },
+  "bugs": { "url": "https://github.com/radwanalmsora/shieldlocal/issues" },
+  "homepage": "https://github.com/radwanalmsora/shieldlocal#readme",
+  "qna": "https://github.com/radwanalmsora/shieldlocal/discussions",
+  "main": "./src/extension.js",
+  "bin": { "shieldlocal": "./bin/shieldlocal.js" },
+  "activationEvents": ["onStartupFinished"],
+  "capabilities": {
+    "untrustedWorkspaces": { "supported": true },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "commands": [
+      { "command": "shieldlocal.scanWorkspace", "title": "Scan Workspace", "category": "ShieldLocal", "icon": "$(search)" },
+      { "command": "shieldlocal.scanFile", "title": "Scan Current File", "category": "ShieldLocal", "icon": "$(file-code)" },
+      { "command": "shieldlocal.openDashboard", "title": "Open Dashboard", "category": "ShieldLocal", "icon": "$(graph)" },
+      { "command": "shieldlocal.exportSarif", "title": "Export SARIF Report", "category": "ShieldLocal", "icon": "$(export)" },
+      { "command": "shieldlocal.exportReport", "title": "Export Markdown Report", "category": "ShieldLocal", "icon": "$(markdown)" },
+      { "command": "shieldlocal.showRules", "title": "Browse & Toggle Rules", "category": "ShieldLocal", "icon": "$(list-selection)" },
+      { "command": "shieldlocal.clear", "title": "Clear Findings", "category": "ShieldLocal", "icon": "$(clear-all)" },
+      { "command": "shieldlocal.disableRule", "title": "Disable Rule in Workspace", "category": "ShieldLocal" }
+    ],
+    "keybindings": [
+      { "command": "shieldlocal.scanWorkspace", "key": "ctrl+alt+s", "mac": "cmd+alt+s" }
+    ],
+    "viewsContainers": {
+      "activitybar": [{ "id": "shieldlocal", "title": "ShieldLocal", "icon": "media/shield.svg" }]
+    },
+    "views": {
+      "shieldlocal": [{ "id": "shieldlocal.findings", "name": "Security Findings" }]
+    },
+    "viewsWelcome": [
+      {
+        "view": "shieldlocal.findings",
+        "contents": "No findings yet.\n\nScan your workspace to look for secrets, injection flaws, weak crypto and vulnerable dependencies — everything runs locally.\n[Scan Workspace](command:shieldlocal.scanWorkspace)\n[Open Dashboard](command:shieldlocal.openDashboard)",
+        "when": "!shieldlocal.hasFindings"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        { "command": "shieldlocal.scanWorkspace", "when": "view == shieldlocal.findings", "group": "navigation@1" },
+        { "command": "shieldlocal.openDashboard", "when": "view == shieldlocal.findings", "group": "navigation@2" },
+        { "command": "shieldlocal.exportSarif", "when": "view == shieldlocal.findings", "group": "navigation@3" },
+        { "command": "shieldlocal.clear", "when": "view == shieldlocal.findings", "group": "navigation@4" }
+      ],
+      "editor/context": [
+        { "command": "shieldlocal.scanFile", "group": "z_shieldlocal@1" }
+      ],
+      "commandPalette": [
+        { "command": "shieldlocal.disableRule", "when": "false" }
+      ]
+    },
+    "configuration": {
+      "title": "ShieldLocal",
+      "properties": {
+        "shieldlocal.enable": { "type": "boolean", "default": true, "description": "Enable ShieldLocal scanning." },
+        "shieldlocal.scanOnType": { "type": "boolean", "default": true, "description": "Re-scan the active file while you type (debounced)." },
+        "shieldlocal.minimumSeverity": { "type": "string", "enum": ["info", "low", "medium", "high", "critical"], "default": "low", "description": "Hide findings below this severity." },
+        "shieldlocal.scanDependencies": { "type": "boolean", "default": true, "description": "Check package.json, package-lock.json and requirements.txt against the bundled advisory data." },
+        "shieldlocal.disabledRules": { "type": "array", "items": { "type": "string" }, "default": [], "markdownDescription": "Rule IDs to turn off. Use **ShieldLocal: Browse & Toggle Rules** to see them all." },
+        "shieldlocal.excludeGlobs": { "type": "array", "items": { "type": "string" }, "default": [], "markdownDescription": "Extra glob patterns to skip during workspace scans, e.g. `**/fixtures/**`." },
+        "shieldlocal.maxFileSizeKB": { "type": "number", "default": 1024, "minimum": 16, "description": "Skip files larger than this size." },
+        "shieldlocal.customAdvisories": { "type": "array", "default": [], "markdownDescription": "Extra advisories in OSV-like form: `{ \"eco\": \"npm\", \"name\": \"pkg\", \"id\": \"CVE-…\", \"severity\": \"high\", \"summary\": \"…\", \"ranges\": [{ \"fixed\": \"1.2.3\" }] }`." }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "shieldlocal.start",
+        "title": "Get started with ShieldLocal",
+        "description": "Scan for secrets and vulnerabilities in under a minute — fully offline.",
+        "steps": [
+          {
+            "id": "scan",
+            "title": "Scan your workspace",
+            "description": "Run a full scan to see every finding at once.\n[Scan Workspace](command:shieldlocal.scanWorkspace)",
+            "media": { "markdown": "media/walkthrough/scan.md" },
+            "completionEvents": ["onCommand:shieldlocal.scanWorkspace"]
+          },
+          {
+            "id": "fix",
+            "title": "Fix with one click",
+            "description": "Hover a squiggle and press Ctrl+. (Cmd+.) to apply a quick fix or ignore a finding.",
+            "media": { "markdown": "media/walkthrough/fix.md" }
+          },
+          {
+            "id": "dashboard",
+            "title": "Open the dashboard",
+            "description": "See your security score, filter findings and export SARIF for GitHub Code Scanning.\n[Open Dashboard](command:shieldlocal.openDashboard)",
+            "media": { "markdown": "media/walkthrough/dashboard.md" },
+            "completionEvents": ["onCommand:shieldlocal.openDashboard"]
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node --test",
+    "scan": "node bin/shieldlocal.js",
+    "package": "vsce package --no-dependencies",
+    "vsce:publish": "vsce publish --no-dependencies"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.2.1"
+  }
+}

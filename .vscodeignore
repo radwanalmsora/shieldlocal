@@ -1,0 +1,12 @@
+.github/**
+test/**
+scripts/**
+samples/**
+images/**
+!images/icon.png
+.gitignore
+.vscodeignore
+**/*.map
+*.vsix
+package-lock.json
+CONTRIBUTING.md
